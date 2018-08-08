@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -27,4 +28,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Return url for a user gravatar.
+     *
+     * @return string
+     */
+    public function avatar()
+    {
+        return 'https://www.gravatar.com/avatar/' . Hash::make($this->email) . '?s=45&d=mm';
+    }
 }
