@@ -29,6 +29,21 @@ class TopicController extends Controller
     }
 
     /**
+     * Show selected topic.
+     *
+     * @param Topic $topic
+     * @return array
+     */
+    public function show(Topic $topic)
+    {
+        return fractal()
+            ->item($topic)
+            ->parseIncludes(['user', 'posts', 'posts.user'])
+            ->transformWith(new TopicTransformer())
+            ->toArray();
+    }
+
+    /**
      * Store newly created topic.
      *
      * @param StoreTopicRequest $request
@@ -38,6 +53,7 @@ class TopicController extends Controller
     {
         $topic = new Topic();
         $topic->title = $request->title;
+        $topic->slug = str_slug($request->title);
         $topic->user()->associate($request->user());
 
         $post = new Post();

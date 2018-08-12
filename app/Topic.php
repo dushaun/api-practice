@@ -17,6 +17,16 @@ class Topic extends Model
     protected $fillable = ['title'];
 
     /**
+     * Identify model by slug.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
      * Topic created by a user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
