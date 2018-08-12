@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTopicRequest;
 use App\Post;
 use App\Topic;
-use Illuminate\Http\Request;
+use App\Transformers\TopicTransformer;
 
 class TopicsController extends Controller
 {
+    /**
+     * Store newly created topic.
+     *
+     * @param StoreTopicRequest $request
+     * @return array
+     */
     public function store(StoreTopicRequest $request)
     {
         $topic = new Topic();
@@ -21,5 +27,11 @@ class TopicsController extends Controller
 
         $topic->save();
         $topic->posts()->save($post);
+
+        return fractal()
+            ->item($topic)
+            ->parseIncludes(['user'])
+            ->transformWith(new TopicTransformer())
+            ->toArray();
     }
 }
