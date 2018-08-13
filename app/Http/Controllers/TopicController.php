@@ -71,6 +71,14 @@ class TopicController extends Controller
             ->toArray();
     }
 
+    /**
+     * Update selected topic.
+     *
+     * @param UpdateTopicRequest $request
+     * @param Topic $topic
+     * @return mixed
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(UpdateTopicRequest $request, Topic $topic)
     {
         $this->authorize('update', $topic);
@@ -83,5 +91,21 @@ class TopicController extends Controller
             ->parseIncludes(['user'])
             ->transformWith(new TopicTransformer())
             ->toArray();
+    }
+
+    /**
+     * Delete selected topic.
+     *
+     * @param Topic $topic
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(Topic $topic)
+    {
+        $this->authorize('destroy', $topic);
+
+        $topic->delete();
+
+        return response(null, 204);
     }
 }
