@@ -18,7 +18,7 @@ class TopicTransformer extends TransformerAbstract
     public function transform(Topic $topic)
     {
         return [
-            'id' => $topic->id,
+            'slug' => $topic->slug,
             'title' => $topic->title,
             'created_at' => $topic->created_at->toDateTimeString(),
             'created_at_human' => $topic->created_at->diffForHumans(),

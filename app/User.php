@@ -38,4 +38,15 @@ class User extends Authenticatable
     {
         return 'https://www.gravatar.com/avatar/' . Hash::make($this->email) . '?s=45&d=mm';
     }
+
+    /**
+     * Check is user owns selected topic.
+     *
+     * @param Topic $topic
+     * @return bool
+     */
+    public function ownsTopic(Topic $topic)
+    {
+        return $this->id === $topic->user->id;
+    }
 }
