@@ -40,7 +40,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Check is user owns selected topic.
+     * Check if user owns selected topic.
      *
      * @param Topic $topic
      * @return bool
@@ -48,5 +48,16 @@ class User extends Authenticatable
     public function ownsTopic(Topic $topic)
     {
         return $this->id === $topic->user->id;
+    }
+
+    /**
+     * Check if user owns selected post.
+     *
+     * @param Post $post
+     * @return bool
+     */
+    public function ownsPost(Post $post)
+    {
+        return $this->id === $post->user->id;
     }
 }
