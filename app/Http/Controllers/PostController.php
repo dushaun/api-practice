@@ -54,4 +54,21 @@ class PostController extends Controller
             ->transformWith(new PostTransformer())
             ->toArray();
     }
+
+    /**
+     * Delete selected post.
+     *
+     * @param Topic $topic
+     * @param Post $post
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(Topic $topic, Post $post)
+    {
+        $this->authorize('destroy', $post);
+
+        $post->delete();
+
+        return response(null, 204);
+    }
 }

@@ -11,13 +11,25 @@ class PostPolicy
     use HandlesAuthorization;
 
     /**
-     * Check is user is authorised to update selected post.
+     * Check if user is authorised to update selected post.
      *
      * @param User $user
      * @param Post $post
      * @return bool
      */
     public function update(User $user, Post $post)
+    {
+        return $user->ownsPost($post);
+    }
+
+    /**
+     * Check if user is authorised to delete select post.
+     *
+     * @param User $user
+     * @param Post $post
+     * @return bool
+     */
+    public function destroy(User $user, Post $post)
     {
         return $user->ownsPost($post);
     }
