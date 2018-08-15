@@ -40,6 +40,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user has liked the selected post.
+     *
+     * @param Post $post
+     * @return bool
+     */
+    public function hasLikedPost(Post $post)
+    {
+        return $post->likes->where('user_id', $this->id)->count() === 1;
+    }
+
+    /**
      * Check if user owns selected topic.
      *
      * @param Topic $topic

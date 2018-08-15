@@ -33,4 +33,16 @@ class PostPolicy
     {
         return $user->ownsPost($post);
     }
+
+    /**
+     * Check if user is authorised to like the selected post.
+     *
+     * @param User $user
+     * @param Post $post
+     * @return bool
+     */
+    public function like(User $user, Post $post)
+    {
+        return !$user->ownsPost($post);
+    }
 }
