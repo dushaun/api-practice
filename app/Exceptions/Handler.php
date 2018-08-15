@@ -50,24 +50,26 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof AuthorizationException) {
-            return response()->json([
-                'message' => 'Unauthorized.'
-            ], 403);
-        }
+        if ($request->expectsJson()) {
+            if ($exception instanceof AuthorizationException) {
+                return response()->json([
+                    'message' => 'Unauthorized.'
+                ], 403);
+            }
 
-        if ($exception instanceof ModelNotFoundException) {
-            $modelName = explode('\\', $exception->getModel());
+            if ($exception instanceof ModelNotFoundException) {
+                $modelName = explode('\\', $exception->getModel());
 
-            return response()->json([
-                'message' => end($modelName). ' not found.'
-            ], 404);
-        }
+                return response()->json([
+                    'message' => end($modelName). ' not found.'
+                ], 404);
+            }
 
-        if ($exception instanceof NotFoundHttpException) {
-            return response()->json([
-                'message' => 'Endpoint could not be found.'
-            ], 404);
+            if ($exception instanceof NotFoundHttpException) {
+                return response()->json([
+                    'message' => 'Endpoint could not be found.'
+                ], 404);
+            }
         }
 
         return parent::render($request, $exception);
